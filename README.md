@@ -87,10 +87,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👤 Author
 
-**Your Name**
-- Portfolio: [your-portfolio-url]
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [your-linkedin-profile]
+**Alex Costa**
+- GitHub: [@AlejandroCosta02](https://github.com/AlejandroCosta02)
+- LinkedIn: [Alex Costa](https://www.linkedin.com/in/alex-costa-b4b99b1b8/)
 
 ## 🙏 Acknowledgments
 
