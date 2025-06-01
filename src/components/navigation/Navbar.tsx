@@ -10,14 +10,18 @@ export function Navbar() {
   const isHomePage = pathname === '/';
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-[9999] bg-white/80 backdrop-blur-md shadow-sm will-change-transform">
+    <nav className={`fixed top-0 left-0 right-0 z-[1] transition-all duration-300 ${
+      isHomePage ? 'bg-transparent' : 'bg-white/80 backdrop-blur-md shadow-sm'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex">
             <div className="flex-shrink-0 flex items-center">
               <Link 
                 href="/" 
-                className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 transition-colors duration-300"
+                className={`text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 transition-colors duration-300 ${
+                  isHomePage ? 'opacity-0' : ''
+                }`}
               >
                 Business Tracker
               </Link>
