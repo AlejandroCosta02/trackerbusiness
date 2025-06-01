@@ -4,6 +4,18 @@ import { signIn } from "next-auth/react";
 import Image from "next/image";
 
 export default function SignIn() {
+  const handleSignIn = () => {
+    const isProduction = process.env.NODE_ENV === 'production';
+    const baseUrl = isProduction 
+      ? 'https://trackerbusiness.vercel.app'
+      : 'http://localhost:3000';
+      
+    signIn("google", {
+      callbackUrl: `${baseUrl}/dashboard`,
+      redirect: true,
+    });
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-xl shadow-lg">
@@ -17,7 +29,7 @@ export default function SignIn() {
         </div>
         <div className="mt-8 space-y-4">
           <button
-            onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+            onClick={handleSignIn}
             className="w-full flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             <Image

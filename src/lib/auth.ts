@@ -8,8 +8,9 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
       authorization: {
         params: {
-          scope: 'openid email profile',
-          prompt: 'select_account'
+          prompt: "select_account",
+          access_type: "offline",
+          response_type: "code"
         }
       }
     }),
@@ -29,42 +30,25 @@ export const authOptions: NextAuthOptions = {
       };
     },
     async redirect({ url, baseUrl }) {
-      // Log the redirect attempt
-      console.log('Redirect attempt:', {
-        url,
-        baseUrl,
-        allowedUrls: [
-          baseUrl,
-          'http://localhost:3000',
-          'https://trackerbusiness.vercel.app'
-        ]
-      });
-
-      // Handle both development and production URLs
-      const allowedUrls = [
-        baseUrl,
-        'http://localhost:3000',
-        'https://trackerbusiness.vercel.app'
-      ];
+      console.log('Redirect attempt:', { url, baseUrl });
       
       // If it's a relative URL, prefix it with the base URL
       if (url.startsWith('/')) {
         const finalUrl = `${baseUrl}${url}`;
-        console.log('Redirecting to:', finalUrl);
+        console.log('Redirecting to relative URL:', finalUrl);
         return finalUrl;
       }
       
-      // Check if the URL is allowed
-      const urlObject = new URL(url);
-      if (allowedUrls.some(allowed => urlObject.origin === allowed)) {
-        console.log('Redirecting to allowed URL:', url);
+      // If the URL is the base URL or starts with it, allow it
+      if (url.startsWith(baseUrl)) {
+        console.log('Redirecting to base URL:', url);
         return url;
       }
       
-      // Default fallback
-      const fallback = baseUrl + '/dashboard';
-      console.log('Falling back to:', fallback);
-      return fallback;
+      // Default to dashboard
+      const defaultUrl = `${baseUrl}/dashboard`;
+      console.log('Redirecting to default:', defaultUrl);
+      return defaultUrl;
     },
   },
   pages: {
