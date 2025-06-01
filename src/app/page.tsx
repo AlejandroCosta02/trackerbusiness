@@ -31,7 +31,7 @@ export default function Home() {
 
       <div className="relative z-1 flex-1 flex flex-col">
         {/* Hero Section */}
-        <div className="flex-1 flex items-start justify-center pt-24 md:pt-32">
+        <div className="flex-1 flex items-center justify-center pt-24 md:pt-32">
           <div className="px-6 lg:px-8 w-full">
             <div className="mx-auto max-w-2xl">
               <div className="text-center">
