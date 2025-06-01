@@ -367,12 +367,12 @@ export default function Dashboard() {
     : '0.00';
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
+    <div className="container mx-auto px-4 py-4 sm:py-8">
+      <div className="mb-6 sm:mb-8">
         <div className="flex items-center">
           {renderLogo()}
           <div className="flex items-center">
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900">{business?.name}</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">{business?.name}</h1>
             <Link 
               href="/business"
               className="ml-3 p-1.5 text-gray-500 hover:text-gray-700 rounded-full hover:bg-gray-100 transition-colors"
@@ -384,11 +384,11 @@ export default function Dashboard() {
             </Link>
           </div>
         </div>
-        <h2 className="text-xl text-gray-500 mt-2">Dashboard</h2>
+        <h2 className="text-lg text-gray-500 mt-2">Dashboard</h2>
       </div>
 
       {/* Business Metrics */}
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-6 sm:mb-8">
         <div className="bg-white overflow-hidden shadow rounded-lg">
           <div className="p-5">
             <div className="flex items-center">
@@ -463,24 +463,24 @@ export default function Dashboard() {
       </div>
 
       {/* Transactions */}
-      <div className="bg-white shadow rounded-lg">
-        <div className="px-4 py-5 sm:px-6 flex justify-between items-center">
+      <div className="bg-white shadow rounded-lg overflow-hidden">
+        <div className="px-4 py-4 sm:px-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <h2 className="text-lg font-medium text-gray-900">Transactions</h2>
           <button
             onClick={() => setShowTransactionForm(true)}
-            className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="w-full sm:w-auto px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             Add Transaction
           </button>
         </div>
 
         {/* Filters */}
-        <div className="px-6 py-4 border-t border-gray-200 bg-white">
-          <div className="mb-6">
+        <div className="px-4 sm:px-6 py-4 border-t border-gray-200 bg-white">
+          <div className="mb-4 sm:mb-6">
             <h3 className="text-lg font-medium text-gray-900">Filter Transactions</h3>
             <p className="mt-1 text-sm text-gray-500">Use the filters below to find specific transactions.</p>
           </div>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             <div>
               <label htmlFor="startDate" className="block text-sm font-medium text-gray-900 mb-2">
                 Start Date
