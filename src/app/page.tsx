@@ -29,7 +29,7 @@ export default function Home() {
       <div className="absolute top-1/3 -right-48 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob delay-2000 z-0" />
       <div className="absolute -bottom-32 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob delay-4000 z-0" />
 
-      <div className="relative z-1 flex flex-col h-full justify-between py-12 md:py-16">
+      <div className="relative z-1 flex flex-col h-full justify-between py-8 md:py-12">
         {/* Hero Section */}
         <div className="flex-none">
           <div className="px-6 lg:px-8">
@@ -41,7 +41,7 @@ export default function Home() {
                 <p className="mt-6 text-lg leading-8 text-gray-600 animate-fade-in">
                   Gain complete control over your finances with a powerful, all-in-one business tracking solution. Monitor investments, track expenses, and analyze profits effortlessly. Make smarter decisions and drive success with real-time insights at your fingertips.
                 </p>
-                <div className="mt-10 flex items-center justify-center animate-fade-in delay-500">
+                <div className="mt-8 flex items-center justify-center animate-fade-in delay-500">
                   <Link
                     href="/auth/signin"
                     className="inline-flex items-center px-6 py-3 text-base font-medium text-white bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg shadow-lg hover:shadow-xl hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-300"
@@ -62,13 +62,13 @@ export default function Home() {
         </div>
 
         {/* Key Features Section */}
-        <div className="flex-none w-full mt-auto">
+        <div className="flex-none w-full mt-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Investment Feature */}
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-indigo-100 to-purple-100 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="relative bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-indigo-50">
+                <div className="relative bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-indigo-50 h-[200px] flex flex-col">
                   <div className="flex items-center mb-4">
                     <div className="h-12 w-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                       <svg className="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -84,7 +84,7 @@ export default function Home() {
               {/* Expenses Feature */}
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-indigo-100 to-purple-100 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="relative bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-indigo-50">
+                <div className="relative bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-indigo-50 h-[200px] flex flex-col">
                   <div className="flex items-center mb-4">
                     <div className="h-12 w-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                       <svg className="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -100,7 +100,7 @@ export default function Home() {
               {/* Profits Feature */}
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-indigo-100 to-purple-100 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="relative bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-indigo-50">
+                <div className="relative bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-indigo-50 h-[200px] flex flex-col">
                   <div className="flex items-center mb-4">
                     <div className="h-12 w-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                       <svg className="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
