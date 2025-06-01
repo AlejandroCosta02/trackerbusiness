@@ -29,9 +29,9 @@ export default function Home() {
       <div className="absolute top-1/3 -right-48 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob delay-2000 z-0" />
       <div className="absolute -bottom-32 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob delay-4000 z-0" />
 
-      <div className="relative z-10 flex-1 flex flex-col pt-16">
+      <div className="relative z-1 flex-1 flex flex-col">
         {/* Hero Section */}
-        <div className="flex-1 flex items-start justify-center pt-8 md:pt-16">
+        <div className="flex-1 flex items-start justify-center pt-24 md:pt-32">
           <div className="px-6 lg:px-8 w-full">
             <div className="mx-auto max-w-2xl">
               <div className="text-center">
