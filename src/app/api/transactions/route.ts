@@ -1,9 +1,19 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/lib/auth';
 import dbConnect from '@/lib/mongodb';
 import { Transaction } from '@/models/Transaction';
 import { Business } from '@/models/Business';
+
+interface TransactionFilters {
+  businessId: string;
+  date?: {
+    $gte: Date;
+    $lte: Date;
+  };
+  type?: string;
+  category?: string;
+}
 
 export async function POST(req: Request) {
   try {
@@ -71,11 +81,11 @@ export async function POST(req: Request) {
       // Update business totals
       const updateQuery: Record<string, number> = {};
       if (body.type === 'investment') {
-        updateQuery.totalInvestment = business.totalInvestment + body.amount;
+        updateQuery.totalInvestment = (business.totalInvestment || 0) + body.amount;
       } else if (body.type === 'expense') {
-        updateQuery.totalExpenses = business.totalExpenses + body.amount;
+        updateQuery.totalExpenses = (business.totalExpenses || 0) + body.amount;
       } else if (body.type === 'sale') {
-        updateQuery.totalSales = business.totalSales + body.amount;
+        updateQuery.totalSales = (business.totalSales || 0) + body.amount;
       }
 
       console.log('Updating business totals:', updateQuery);
@@ -86,18 +96,19 @@ export async function POST(req: Request) {
       );
 
       return NextResponse.json(transaction);
-    } catch (error: any) {
+    } catch (error: Error | unknown) {
       console.error('Transaction error:', error);
-      if (error.name === 'ValidationError') {
+      if (error instanceof Error && error.name === 'ValidationError') {
         return NextResponse.json({ error: 'Invalid transaction data' }, { status: 400 });
       }
       throw error;
     }
-  } catch (error: any) {
+  } catch (error: Error | unknown) {
     console.error('Server error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Internal server error';
     return NextResponse.json({ 
       error: process.env.NODE_ENV === 'development' 
-        ? error.message 
+        ? errorMessage
         : 'Internal server error'
     }, { status: 500 });
   }
@@ -140,7 +151,7 @@ export async function GET(req: Request) {
     }
 
     // Build query filters
-    const query: Record<string, any> = { businessId };
+    const query: TransactionFilters = { businessId };
     if (startDate && endDate) {
       query.date = { $gte: new Date(startDate), $lte: new Date(endDate) };
     }
@@ -171,8 +182,9 @@ export async function GET(req: Request) {
         limit
       }
     });
-  } catch (error: any) {
+  } catch (error: Error | unknown) {
     console.error('Server error:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : 'Internal server error';
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 } 

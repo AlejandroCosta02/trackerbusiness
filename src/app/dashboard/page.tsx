@@ -39,6 +39,15 @@ interface Filters {
   category: string;
 }
 
+interface TransactionSubmitData {
+  businessId: string;
+  type: 'investment' | 'expense' | 'sale';
+  amount: number;
+  description: string;
+  date: string;
+  category: string;
+}
+
 const formatCurrency = (amount: number): string => {
   return amount.toLocaleString('en-US', {
     minimumFractionDigits: 2,
@@ -167,7 +176,7 @@ export default function Dashboard() {
     fetchData();
   }, [fetchData]);
 
-  const handleTransactionSubmit = async (data: any) => {
+  const handleTransactionSubmit = async (data: TransactionSubmitData) => {
     try {
       const method = editingTransaction ? 'PUT' : 'POST';
       const url = editingTransaction 

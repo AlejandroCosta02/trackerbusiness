@@ -1,14 +1,16 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/lib/auth';
 import dbConnect from '@/lib/mongodb';
 import { Transaction } from '@/models/Transaction';
 import { Business } from '@/models/Business';
 
+type Params = { id: string };
+
 export async function DELETE(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
+  request: Request,
+  { params }: { params: Params }
+): Promise<Response> {
   try {
     const authSession = await getServerSession(authOptions);
     
@@ -53,16 +55,17 @@ export async function DELETE(
     );
 
     return NextResponse.json({ message: 'Transaction deleted successfully' });
-  } catch (error: any) {
+  } catch (error: Error | unknown) {
     console.error('Error deleting transaction:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
 
 export async function PUT(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
+  request: Request,
+  { params }: { params: Params }
+): Promise<Response> {
   try {
     const authSession = await getServerSession(authOptions);
     
@@ -70,7 +73,7 @@ export async function PUT(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const body = await req.json();
+    const body = await request.json();
 
     await dbConnect();
 
@@ -112,8 +115,9 @@ export async function PUT(
     );
 
     return NextResponse.json(updatedTransaction);
-  } catch (error: any) {
+  } catch (error: Error | unknown) {
     console.error('Error updating transaction:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 } 

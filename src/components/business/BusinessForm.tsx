@@ -4,21 +4,23 @@ import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
+interface BusinessData {
+  name: string;
+  description: string;
+  industry: string;
+  foundedDate: string;
+  logo?: string;
+}
+
 interface BusinessFormProps {
-  onSubmit: (data: any) => void;
-  initialData?: {
-    name: string;
-    description: string;
-    industry: string;
-    foundedDate: string;
-    logo?: string;
-  };
+  onSubmit: (data: BusinessData) => void;
+  initialData?: BusinessData;
 }
 
 export default function BusinessForm({ onSubmit, initialData }: BusinessFormProps) {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<BusinessData>({
     name: initialData?.name || '',
     description: initialData?.description || '',
     industry: initialData?.industry || '',

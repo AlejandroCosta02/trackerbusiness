@@ -2,17 +2,29 @@
 
 import { useState } from 'react';
 
+type TransactionType = 'investment' | 'expense' | 'sale';
+
+interface TransactionData {
+  type: TransactionType;
+  amount: number;
+  description: string;
+  date: string;
+  category: string;
+}
+
+interface TransactionFormData {
+  type: TransactionType;
+  amount: string;
+  description: string;
+  date: string;
+  category: string;
+}
+
 interface TransactionFormProps {
   businessId: string;
-  onSubmit: (data: any) => void;
+  onSubmit: (data: TransactionData & { businessId: string }) => void;
   onCancel: () => void;
-  initialData?: {
-    type: 'investment' | 'expense' | 'sale';
-    amount: number;
-    description: string;
-    date: string;
-    category: string;
-  };
+  initialData?: TransactionData;
 }
 
 const formatAmount = (value: string) => {
@@ -31,8 +43,8 @@ const formatAmount = (value: string) => {
 };
 
 export default function TransactionForm({ businessId, onSubmit, onCancel, initialData }: TransactionFormProps) {
-  const [formData, setFormData] = useState({
-    type: (initialData?.type || 'investment') as 'investment' | 'expense' | 'sale',
+  const [formData, setFormData] = useState<TransactionFormData>({
+    type: initialData?.type || 'investment',
     amount: initialData ? formatAmount(initialData.amount.toString()) : '',
     description: initialData?.description || '',
     date: initialData?.date.split('T')[0] || new Date().toISOString().split('T')[0],
@@ -52,8 +64,9 @@ export default function TransactionForm({ businessId, onSubmit, onCancel, initia
         amount: parseFloat(formData.amount.replace(/,/g, '')),
         businessId,
       });
-    } catch (error: any) {
-      setError(error.message || 'Failed to save transaction');
+    } catch (error: Error | unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to save transaction';
+      setError(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -93,7 +106,7 @@ export default function TransactionForm({ businessId, onSubmit, onCancel, initia
               name="type"
               value="investment"
               checked={formData.type === 'investment'}
-              onChange={(e) => setFormData({ ...formData, type: e.target.value as 'investment' | 'expense' | 'sale' })}
+              onChange={(e) => setFormData({ ...formData, type: e.target.value as TransactionType })}
               className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300"
             />
             <span className="ml-2 text-sm text-gray-700">Investment</span>
@@ -104,7 +117,7 @@ export default function TransactionForm({ businessId, onSubmit, onCancel, initia
               name="type"
               value="expense"
               checked={formData.type === 'expense'}
-              onChange={(e) => setFormData({ ...formData, type: e.target.value as 'investment' | 'expense' | 'sale' })}
+              onChange={(e) => setFormData({ ...formData, type: e.target.value as TransactionType })}
               className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300"
             />
             <span className="ml-2 text-sm text-gray-700">Expense</span>
@@ -115,7 +128,7 @@ export default function TransactionForm({ businessId, onSubmit, onCancel, initia
               name="type"
               value="sale"
               checked={formData.type === 'sale'}
-              onChange={(e) => setFormData({ ...formData, type: e.target.value as 'investment' | 'expense' | 'sale' })}
+              onChange={(e) => setFormData({ ...formData, type: e.target.value as TransactionType })}
               className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300"
             />
             <span className="ml-2 text-sm text-gray-700">Sale</span>

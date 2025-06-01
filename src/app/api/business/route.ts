@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/lib/auth';
 import dbConnect from '@/lib/mongodb';
 import { Business } from '@/models/Business';
 
@@ -27,13 +27,14 @@ export async function POST(req: Request) {
     console.log('Created business:', business);
 
     return NextResponse.json(business);
-  } catch (error: any) {
+  } catch (error: Error | unknown) {
     console.error('Error creating business:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     const session = await getServerSession(authOptions);
     
@@ -53,9 +54,10 @@ export async function GET(req: Request) {
     console.log('Found businesses:', businesses);
 
     return NextResponse.json(businesses);
-  } catch (error: any) {
+  } catch (error: Error | unknown) {
     console.error('Error fetching businesses:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
 
@@ -105,8 +107,9 @@ export async function PUT(req: Request) {
     });
 
     return NextResponse.json(business);
-  } catch (error: any) {
+  } catch (error: Error | unknown) {
     console.error('Error updating business:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 } 
