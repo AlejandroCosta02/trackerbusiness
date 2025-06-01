@@ -17,7 +17,7 @@ export default function Home() {
   }, [session, router]);
 
   return (
-    <div className="h-screen bg-gradient-to-b from-indigo-50 via-white to-indigo-50 relative overflow-hidden flex flex-col">
+    <div className="h-screen overflow-hidden bg-gradient-to-b from-indigo-50 via-white to-indigo-50 relative">
       {/* Animated background elements */}
       <div className="absolute inset-0 z-0">
         <div className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-gradient-to-br from-indigo-100/30 via-transparent to-purple-100/30 animate-slow-spin" />
@@ -29,9 +29,9 @@ export default function Home() {
       <div className="absolute top-1/3 -right-48 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob delay-2000 z-0" />
       <div className="absolute -bottom-32 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob delay-4000 z-0" />
 
-      <div className="relative z-1 flex flex-col h-full py-4">
+      <div className="relative z-1 h-full flex flex-col pt-8 pb-6">
         {/* Hero Section */}
-        <div className="flex-none mb-4">
+        <div className="flex-none">
           <div className="px-6 lg:px-8">
             <div className="mx-auto max-w-2xl">
               <div className="text-center">
@@ -62,7 +62,7 @@ export default function Home() {
         </div>
 
         {/* Key Features Section */}
-        <div className="flex-none w-full">
+        <div className="flex-none w-full mt-8">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Investment Feature */}
