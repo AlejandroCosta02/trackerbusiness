@@ -24,7 +24,9 @@ export const authOptions: NextAuthOptions = {
     async redirect({ url, baseUrl }) {
       if (url.startsWith("/")) {
         return `${baseUrl}${url}`;
-      } else if (new URL(url).origin === baseUrl) {
+      } else if (new URL(url).origin === baseUrl || 
+                 url.startsWith("http://localhost:3000") || 
+                 url.startsWith("http://localhost:3001")) {
         return url;
       }
       return baseUrl + "/dashboard";

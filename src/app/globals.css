@@ -21,8 +21,7 @@
   }
 }
 
-html,
-body {
+html {
   height: 100%;
   overflow-x: hidden;
   -webkit-text-size-adjust: 100%;
@@ -33,13 +32,23 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-  position: relative;
   -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
-/* Prevent content from being hidden under fixed navbar on mobile */
+/* Ensure main content is properly positioned */
 main {
   width: 100%;
   position: relative;
   z-index: 1;
+  min-height: 100vh;
+}
+
+/* Reset default styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
