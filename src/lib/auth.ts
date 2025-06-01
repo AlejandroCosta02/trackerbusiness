@@ -14,6 +14,7 @@ export const authOptions: NextAuthOptions = {
       }
     }),
   ],
+  debug: true,  // Enable debug logging
   session: {
     strategy: "jwt",
   },
@@ -28,6 +29,17 @@ export const authOptions: NextAuthOptions = {
       };
     },
     async redirect({ url, baseUrl }) {
+      // Log the redirect attempt
+      console.log('Redirect attempt:', {
+        url,
+        baseUrl,
+        allowedUrls: [
+          baseUrl,
+          'http://localhost:3000',
+          'https://trackerbusiness.vercel.app'
+        ]
+      });
+
       // Handle both development and production URLs
       const allowedUrls = [
         baseUrl,
@@ -37,17 +49,22 @@ export const authOptions: NextAuthOptions = {
       
       // If it's a relative URL, prefix it with the base URL
       if (url.startsWith('/')) {
-        return `${baseUrl}${url}`;
+        const finalUrl = `${baseUrl}${url}`;
+        console.log('Redirecting to:', finalUrl);
+        return finalUrl;
       }
       
       // Check if the URL is allowed
       const urlObject = new URL(url);
       if (allowedUrls.some(allowed => urlObject.origin === allowed)) {
+        console.log('Redirecting to allowed URL:', url);
         return url;
       }
       
       // Default fallback
-      return baseUrl + '/dashboard';
+      const fallback = baseUrl + '/dashboard';
+      console.log('Falling back to:', fallback);
+      return fallback;
     },
   },
   pages: {
