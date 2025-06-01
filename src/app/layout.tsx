@@ -55,9 +55,9 @@ export default function RootLayout({
     <html lang="en" className="h-full">
       <body className={`${inter.className} h-full overflow-x-hidden bg-gradient-to-b from-indigo-50 via-white to-indigo-50`}>
         <AuthProvider>
-          <div className="min-h-screen flex flex-col relative">
+          <div className="min-h-screen flex flex-col">
             <Navbar />
-            <main className="flex-1 pt-16 w-full">{children}</main>
+            <main className="flex-1 w-full">{children}</main>
           </div>
         </AuthProvider>
       </body>
