@@ -39,7 +39,7 @@ export async function GET() {
     const session = await getServerSession(authOptions);
     
     if (!session || !session.user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized - Please sign in again' }, { status: 401 });
     }
 
     await dbConnect();
@@ -49,13 +49,23 @@ export async function GET() {
 
     const businesses = await Business.find({ 
       userId: session.user.email  // Always use email as the userId
-    });
+    }).select('-__v').lean(); // Optimize query by excluding version field and using lean()
 
-    console.log('Found businesses:', businesses);
+    if (!businesses || businesses.length === 0) {
+      return NextResponse.json({ error: 'No business found - Please create one first' }, { status: 404 });
+    }
+
+    console.log('Found businesses:', businesses.length);
 
     return NextResponse.json(businesses);
   } catch (error: Error | unknown) {
     console.error('Error fetching businesses:', error);
+    
+    // Handle MongoDB connection errors
+    if (error instanceof Error && error.message.includes('MONGODB_URI')) {
+      return NextResponse.json({ error: 'Database connection error - Please try again later' }, { status: 503 });
+    }
+    
     const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
     return NextResponse.json({ error: errorMessage }, { status: 500 });
   }

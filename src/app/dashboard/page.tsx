@@ -96,6 +96,9 @@ export default function Dashboard() {
     if (!session) return;
     
     try {
+      setLoading(true);
+      setError(null);
+      
       const response = await fetch('/api/business', {
         headers: {
           'Accept': 'application/json',
@@ -103,7 +106,8 @@ export default function Dashboard() {
       });
       
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorData = await response.json();
+        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
       }
       
       const data = await response.json();
@@ -111,11 +115,16 @@ export default function Dashboard() {
       if (data.length > 0) {
         setBusiness(data[0]);
       } else {
+        // Redirect to business creation if no business exists
+        console.log('No business found, redirecting to business creation...');
         router.push('/business');
       }
     } catch (error) {
       console.error('Error fetching business:', error);
-      setError('Failed to load business data. Please try refreshing the page.');
+      setError(error instanceof Error ? error.message : 'Failed to load business data. Please check your connection and try again.');
+      // Don't redirect on error, let the user see the error message
+    } finally {
+      setLoading(false);
     }
   }, [session, router]);
 
@@ -309,25 +318,34 @@ export default function Dashboard() {
   if (status === 'loading' || loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading your dashboard...</p>
-        </div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-red-600 mb-4">{error}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
-          >
-            Refresh Page
-          </button>
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <div className="bg-white p-8 rounded-lg shadow-md text-center max-w-md w-full">
+          <h2 className="text-2xl font-bold text-red-600 mb-4">Error Loading Data</h2>
+          <p className="text-gray-600 mb-6">{error}</p>
+          <div className="space-y-4">
+            <button
+              onClick={() => {
+                setError(null);
+                fetchBusiness();
+              }}
+              className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition-colors w-full"
+            >
+              Try Again
+            </button>
+            <Link
+              href="/business"
+              className="block bg-gray-100 text-gray-700 px-6 py-2 rounded hover:bg-gray-200 transition-colors w-full text-center"
+            >
+              Set Up Business
+            </Link>
+          </div>
         </div>
       </div>
     );
