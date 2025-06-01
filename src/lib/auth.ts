@@ -22,14 +22,26 @@ export const authOptions: NextAuthOptions = {
       };
     },
     async redirect({ url, baseUrl }) {
-      if (url.startsWith("/")) {
+      // Handle both development and production URLs
+      const allowedUrls = [
+        baseUrl,
+        'http://localhost:3000',
+        'https://trackerbusiness.vercel.app'
+      ];
+      
+      // If it's a relative URL, prefix it with the base URL
+      if (url.startsWith('/')) {
         return `${baseUrl}${url}`;
-      } else if (new URL(url).origin === baseUrl || 
-                 url.startsWith("http://localhost:3000") || 
-                 url.startsWith("http://localhost:3001")) {
+      }
+      
+      // Check if the URL is allowed
+      const urlObject = new URL(url);
+      if (allowedUrls.some(allowed => urlObject.origin === allowed)) {
         return url;
       }
-      return baseUrl + "/dashboard";
+      
+      // Default fallback
+      return baseUrl + '/dashboard';
     },
   },
   pages: {
