@@ -17,7 +17,7 @@ export default function Home() {
   }, [session, router]);
 
   return (
-    <div className="min-h-screen md:h-screen bg-gradient-to-b from-indigo-50 via-white to-indigo-50 relative overflow-x-hidden md:overflow-hidden flex flex-col">
+    <div className="h-screen bg-gradient-to-b from-indigo-50 via-white to-indigo-50 relative overflow-hidden flex flex-col">
       {/* Animated background elements */}
       <div className="absolute inset-0 z-0">
         <div className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-gradient-to-br from-indigo-100/30 via-transparent to-purple-100/30 animate-slow-spin" />
@@ -29,10 +29,10 @@ export default function Home() {
       <div className="absolute top-1/3 -right-48 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob delay-2000 z-0" />
       <div className="absolute -bottom-32 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob delay-4000 z-0" />
 
-      <div className="relative z-1 flex-1 flex flex-col">
+      <div className="relative z-1 flex flex-col h-full justify-between py-12 md:py-16">
         {/* Hero Section */}
-        <div className="flex-1 flex items-center justify-center pt-24 md:pt-32">
-          <div className="px-6 lg:px-8 w-full">
+        <div className="flex-none">
+          <div className="px-6 lg:px-8">
             <div className="mx-auto max-w-2xl">
               <div className="text-center">
                 <h1 className="text-4xl font-bold tracking-tight sm:text-6xl bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 bg-300% animate-gradient bg-clip-text text-transparent">
@@ -62,13 +62,13 @@ export default function Home() {
         </div>
 
         {/* Key Features Section */}
-        <div className="w-full pb-8 md:pb-8 mt-16 md:mt-0">
+        <div className="flex-none w-full mt-auto">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {/* Investment Feature */}
-              <div className="relative group h-full">
+              <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-indigo-100 to-purple-100 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="relative h-full bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-indigo-50 flex flex-col">
+                <div className="relative bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-indigo-50">
                   <div className="flex items-center mb-4">
                     <div className="h-12 w-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                       <svg className="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -76,15 +76,15 @@ export default function Home() {
                       </svg>
                     </div>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">Investments</h3>
-                  <p className="text-base text-gray-600 flex-grow">Track and optimize your returns with comprehensive investment monitoring and analysis tools.</p>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Investments</h3>
+                  <p className="text-sm text-gray-600">Track and optimize your returns with comprehensive investment monitoring and analysis tools.</p>
                 </div>
               </div>
 
               {/* Expenses Feature */}
-              <div className="relative group h-full">
+              <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-indigo-100 to-purple-100 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="relative h-full bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-indigo-50 flex flex-col">
+                <div className="relative bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-indigo-50">
                   <div className="flex items-center mb-4">
                     <div className="h-12 w-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                       <svg className="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -92,15 +92,15 @@ export default function Home() {
                       </svg>
                     </div>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">Expenses</h3>
-                  <p className="text-base text-gray-600 flex-grow">See where your money goes at a glance with intuitive expense tracking and categorization.</p>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Expenses</h3>
+                  <p className="text-sm text-gray-600">See where your money goes at a glance with intuitive expense tracking and categorization.</p>
                 </div>
               </div>
 
               {/* Profits Feature */}
-              <div className="relative group h-full">
+              <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-indigo-100 to-purple-100 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="relative h-full bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-indigo-50 flex flex-col">
+                <div className="relative bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-indigo-50">
                   <div className="flex items-center mb-4">
                     <div className="h-12 w-12 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                       <svg className="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -108,8 +108,8 @@ export default function Home() {
                       </svg>
                     </div>
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3">Profits</h3>
-                  <p className="text-base text-gray-600 flex-grow">Make data-driven decisions to grow your business with real-time profit analytics and insights.</p>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">Profits</h3>
+                  <p className="text-sm text-gray-600">Make data-driven decisions to grow your business with real-time profit analytics and insights.</p>
                 </div>
               </div>
             </div>
