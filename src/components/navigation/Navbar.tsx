@@ -10,7 +10,7 @@ export function Navbar() {
   const isHomePage = pathname === '/';
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-[2] transition-all duration-300 ${
+    <nav className={`fixed top-0 left-0 right-0 transition-all duration-300 ${
       isHomePage ? 'bg-transparent' : 'bg-white/80 backdrop-blur-md shadow-sm'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
