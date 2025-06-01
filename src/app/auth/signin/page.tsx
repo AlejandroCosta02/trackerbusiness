@@ -2,18 +2,32 @@
 
 import { signIn } from "next-auth/react";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function SignIn() {
-  const handleSignIn = () => {
-    const isProduction = process.env.NODE_ENV === 'production';
-    const baseUrl = isProduction 
-      ? 'https://trackerbusiness.vercel.app'
-      : 'http://localhost:3000';
-      
-    signIn("google", {
-      callbackUrl: `${baseUrl}/dashboard`,
-      redirect: true,
-    });
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSignIn = async () => {
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
+        ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+        : process.env.NODE_ENV === 'production'
+          ? 'https://trackerbusiness.vercel.app'
+          : 'http://localhost:3000';
+
+      const result = await signIn("google", {
+        callbackUrl: `${baseUrl}/dashboard`,
+        redirect: true,
+      });
+
+      if (result?.error) {
+        setError(result.error);
+        console.error('Sign in error:', result.error);
+      }
+    } catch (err) {
+      console.error('Sign in error:', err);
+      setError('An unexpected error occurred during sign in');
+    }
   };
 
   return (
@@ -27,6 +41,11 @@ export default function SignIn() {
             Sign in to manage your business finances
           </p>
         </div>
+        {error && (
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <p className="text-sm">{error}</p>
+          </div>
+        )}
         <div className="mt-8 space-y-4">
           <button
             onClick={handleSignIn}
