@@ -23,7 +23,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full">
-      <body className={`${inter.className} h-full overflow-x-hidden`}>
+      <body className={`${inter.className} h-full overflow-x-hidden bg-gradient-to-b from-indigo-50 via-white to-indigo-50`}>
         <AuthProvider>
           <div className="min-h-screen flex flex-col relative">
             <Navbar />
