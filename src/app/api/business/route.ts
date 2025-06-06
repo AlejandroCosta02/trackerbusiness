@@ -9,26 +9,63 @@ export async function POST(req: Request) {
     const session = await getServerSession(authOptions);
     
     if (!session || !session.user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return NextResponse.json({ error: 'Unauthorized - Please sign in again' }, { status: 401 });
+    }
+
+    if (!session.user.email) {
+      return NextResponse.json({ error: 'Invalid user email' }, { status: 400 });
     }
 
     const body = await req.json();
+
+    // Validate required fields
+    if (!body.name) {
+      return NextResponse.json({ error: 'Business name is required' }, { status: 400 });
+    }
     
     await dbConnect();
 
+    // Check if user already has a business
+    const existingBusiness = await Business.findOne({ userId: session.user.email });
+    if (existingBusiness) {
+      return NextResponse.json({ error: 'User already has a business' }, { status: 409 });
+    }
+
     // Debug logging
-    console.log('Creating business with session user:', session.user);
+    console.log('Creating business for user:', session.user.email);
 
     const business = await Business.create({
-      ...body,
-      userId: session.user.email, // Always use email as the userId
+      userId: session.user.email,
+      name: body.name,
+      description: body.description || '',
+      industry: body.industry || '',
+      foundedDate: body.foundedDate || new Date(),
+      logo: body.logo || '',
+      totalInvestment: 0,
+      totalExpenses: 0,
+      totalSales: 0
     });
 
-    console.log('Created business:', business);
+    console.log('Created business:', {
+      id: business._id,
+      name: business.name,
+      userId: business.userId
+    });
 
     return NextResponse.json(business);
   } catch (error: Error | unknown) {
     console.error('Error creating business:', error);
+    
+    // Handle MongoDB specific errors
+    if (error instanceof Error) {
+      if (error.message.includes('duplicate key error')) {
+        return NextResponse.json({ error: 'A business already exists for this user' }, { status: 409 });
+      }
+      if (error.message.includes('validation failed')) {
+        return NextResponse.json({ error: 'Invalid business data provided' }, { status: 400 });
+      }
+    }
+    
     const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
     return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
